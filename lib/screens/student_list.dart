@@ -28,7 +28,10 @@ class _StudentListState extends State<StudentList> {
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
 
-        // Verificar si la lista no está vacía
+        // Simulamos una demora artificial de 2 segundos antes de mostrar los datos
+        await Future.delayed(Duration(seconds: 2));
+
+        // Verificar que la respuesta no esté vacía
         if (data.isNotEmpty) {
           setState(() {
             students = data.map((student) {
@@ -43,7 +46,6 @@ class _StudentListState extends State<StudentList> {
             errorMessage = 'No hay datos disponibles.';
           });
         }
-
       } else {
         setState(() {
           errorMessage = 'Error al obtener la lista de alumnos.';
@@ -55,7 +57,7 @@ class _StudentListState extends State<StudentList> {
       });
     } finally {
       setState(() {
-        isLoading = false; // Terminamos la carga
+        isLoading = false; // Terminamos la carga después de la demora
       });
     }
   }
